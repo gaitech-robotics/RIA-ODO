@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/gaitech/gaitech_programs/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/gaitech/gaitech_programs/catkin_ws/src/ria_teleop/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

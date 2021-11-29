@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <name>riaodo_description</name>
+  <version>0.1.0</version>
+  <description> This package includes urdf files of RIA ODO </description>
+  <maintainer email="chenlinkai@gaitechrobotics.com"> Leo Chen </maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+  </export>
+</package>

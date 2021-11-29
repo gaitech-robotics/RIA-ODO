@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<robot name="RIA_ODO" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find riaodo_description)/urdf/materials.urdf.xacro"/>
+  <xacro:include filename="$(find riaodo_description)/urdf/property.urdf.xacro"/>
+  <xacro:include filename="$(find riaodo_description)/urdf/wheel_supports_static.urdf.xacro"/>
+  <xacro:include filename="$(find riaodo_description)/urdf/wheels_static.urdf.xacro"/>
+ 
+  <link name="base_footprint">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Green"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Green"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>   
+  </link>
+
+  <link name="riaodo_base_link" >
+    <inertial>
+      <mass value="44.337"/>
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="1.963" ixy="0.019" ixz="-0.291" iyy="4.162" iyz="0.000" izz="5.165"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/body.stl"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/body.stl"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="riaodo_base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.2"/>
+  </joint>
+
+  <link name="riaodo_top_plate" >
+    <inertial>
+      <mass value="4.001"/>
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="0.061" ixy="-0.003" ixz="0.000" iyy="0.171" iyz="0.000" izz="0.232"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/top_plate.stl"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/top_plate.stl"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <joint name="base_link_to_top_plate" type="fixed">
+    <parent link="riaodo_base_link"/>
+    <child link="riaodo_top_plate"/>
+    <origin rpy="0 0 0" xyz="0 0 0.2685"/>
+  </joint>
+
+  <link name="riaodo_balance_link" >
+    <inertial>
+      <mass value="4.295"/>
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="0.144" ixy="0.000" ixz="0.009" iyy="0.039" iyz="0.000" izz="0.175"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/balance_link.stl"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://riaodo_description/meshes/balance_link.stl"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <joint name="base_link_to_balance_link" type="fixed">
+    <parent link="riaodo_base_link"/>
+    <child link="riaodo_balance_link"/>
+    <origin rpy="0 0 0" xyz="-0.409 0 0.16"/>
+  </joint>  
+
+  <!--wheel supports-->
+  <xacro:ria_odo_wheel_supports prefix="left_wheel_support" parent="riaodo_base_link" value="left">
+	<origin xyz="${WHEEL_SUPPORT_X} ${WHEEL_SUPPORT_Y} ${WHEEL_SUPPORT_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel_supports>
+  <xacro:ria_odo_wheel_supports prefix="right_wheel_support" parent="riaodo_base_link" value="right">
+	<origin xyz="${WHEEL_SUPPORT_X} -${WHEEL_SUPPORT_Y} ${WHEEL_SUPPORT_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel_supports>
+
+  <!-- drive wheels-->
+  <xacro:ria_odo_wheel prefix="front_left" parent="left_wheel_support_link" >
+	<origin xyz="${WHEEL_X} ${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel>
+  <xacro:ria_odo_wheel prefix="rear_left" parent="left_wheel_support_link" >
+	<origin xyz="-${WHEEL_X} ${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel>
+  <xacro:ria_odo_wheel prefix="front_right" parent="right_wheel_support_link" >
+	<origin xyz="${WHEEL_X} -${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel>
+  <xacro:ria_odo_wheel prefix="rear_right" parent="right_wheel_support_link" >
+	<origin xyz="-${WHEEL_X} -${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:ria_odo_wheel>
+
+
+
+</robot>

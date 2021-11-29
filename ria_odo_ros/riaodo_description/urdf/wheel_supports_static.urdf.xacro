@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot name="riaodo_wheel_supports" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <xacro:macro name="ria_odo_wheel_supports" params="prefix parent value *origin">
+
+    <xacro:property name="flag" value="${value}" />
+
+    <joint name="${prefix}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${prefix}_link"/>
+    </joint>
+
+    <xacro:if value="${flag == 'left'}">
+      <link name="left_wheel_support_link" >
+        <inertial>
+          <mass value="21.75"/>
+          <origin rpy=" 0 0 0" xyz="0 0 0"/>
+          <inertia  ixx="0.183" ixy="0.001" ixz="-0.015" iyy="1.118" iyz="-0.003" izz="0.969"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="package://riaodo_description/meshes/wheel_support_left.stl"/>
+          </geometry>
+          <material name="Dark_Grey"/>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://riaodo_description/meshes/wheel_support_left.stl"/>
+          </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </collision>      
+      </link>
+    </xacro:if>
+
+    <xacro:if value="${flag == 'right'}">
+      <link name="right_wheel_support_link" >
+        <inertial>
+          <mass value="21.75"/>
+          <origin rpy=" 0 0 0" xyz="0 0 0"/>
+          <inertia  ixx="0.183" ixy="-0.001" ixz="-0.015" iyy="1.118" iyz="0.003" izz="0.969"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="package://riaodo_description/meshes/wheel_support_right.stl"/>
+          </geometry>
+          <material name="Dark_Grey"/>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://riaodo_description/meshes/wheel_support_right.stl"/>
+          </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </collision>      
+      </link>
+    </xacro:if>
+
+  </xacro:macro>
+
+
+</robot>

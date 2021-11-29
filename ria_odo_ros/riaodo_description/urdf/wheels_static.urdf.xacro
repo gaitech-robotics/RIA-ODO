@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="riaodo_wheels" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <xacro:macro name="ria_odo_wheel" params="prefix parent *origin">
+
+    <joint name="${prefix}_wheel_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${prefix}_wheel_link"/>
+    </joint>
+
+    <link name="${prefix}_wheel_link">
+      <inertial>
+        <mass value="2.5"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0.026" ixy="0.0" ixz="0.0" iyy="0.044" iyz="0.0" izz="0.026"/>   
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://riaodo_description/meshes/wheel.stl" />
+        </geometry>
+        <material name="Black"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="0.1665" length="0.114"/>
+        </geometry>
+        <origin rpy="${M_PI/2} 0 0" xyz="0 -0.057 0"/>
+      </collision>
+    </link>
+
+  </xacro:macro>
+      
+
+</robot>

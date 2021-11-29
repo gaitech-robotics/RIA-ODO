@@ -1,0 +1,37 @@
+#RC input topic
+rc_topic: /mavros/rc/in
+
+#command velocity topic
+cmd_vel_topic: cmd
+
+#Max linear Velocity
+linear_max: 1.5
+
+#Max angular Velocity
+angular_max: 1.5
+
+# channels Num:
+channels_num: 8
+
+# channels Max&Min value
+channels_value_max: 1990
+channels_value_min: 970
+
+# left updown/leftright channel
+left_down2up: 2
+left_left2right: 3
+
+# right updown/leftright channel
+right_down2up: 1
+right_left2right: 0
+
+# middle switch channel(up: Min_value)
+middle_sw: 5
+
+# left/right switch channel
+function_sw: 4
+
+# left sw/right sw  up    middle    down
+# up                970   1174      1378
+# middle            1276  1480      1684
+# down              1582  1786      1990
