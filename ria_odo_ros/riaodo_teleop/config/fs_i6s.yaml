@@ -17,6 +17,10 @@ channels_num: 8
 channels_value_max: 2000
 channels_value_min: 1000
 
+#Channel value error
+add_error: true
+error_value: 5
+
 # left updown/leftright channel
 left_down2up: 2
 left_left2right: 3

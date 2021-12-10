@@ -36,6 +36,8 @@ namespace ria_teleop
 		_pnh.param<int>("channels_num", _channels_num, 8);
 		_pnh.param<int>("channels_value_max", _channels_max, 1990);
 		_pnh.param<int>("channels_value_min", _channels_min, 970);
+		_pnh.param<bool>("add_error", _add_error, false);
+		_pnh.param<int>("error_value", _error_value, 5);
 		_pnh.param<int>("left_down2up", _left_down2up, 2);
 		_pnh.param<int>("left_left2right", _left_left2right, 3);
 		_pnh.param<int>("right_down2up", _right_down2up, 1);
@@ -70,11 +72,11 @@ namespace ria_teleop
 
 	void RC::RCValueCB(const mavros_msgs::RCIn::ConstPtr& msg){
 		int channels_value[_channels_num];
-		for(int i=0;i<8;i++){
+		for(int i=0;i<_channels_num;i++){
 			channels_value[i] = msg->channels[i];
 		}
 		if (channels_value[_left_start] == _channels_max && channels_value[_right_start] == _channels_max ){
-			ROS_ERROR_STREAM("Only can enable one side switch!");
+			ROS_ERROR_STREAM("Only can enable one side switch at the same time!");
 			left_start = false;
 			right_start = false;
 		}
@@ -89,27 +91,52 @@ namespace ria_teleop
 			right_start = false;
 		}			
 		
-
-		if (channels_value[ _left_down2up] == _channels_min){
-			if(channels_value[ _left_left2right] == _channels_max){
+		if (_add_error){
+			if (channels_value[ _left_down2up] >= (_channels_min - _error_value) 
+			  && channels_value[_left_down2up] <= (_channels_min + _error_value)){
+				if (channels_value[ _left_left2right] >= (_channels_max - _error_value)
+				 && channels_value[ _left_left2right] <= (_channels_max + _error_value)){
 				left_enable = true;
-			}else {
-				left_enable = false;
-			}
-		} else {
+				}else {
+					left_enable = false;
+				}
+			} else {
 			left_enable = false;
-		}
-
-		if (channels_value[ _right_down2up] == _channels_min){
-			if(channels_value[ _right_left2right] == _channels_min){
-				right_enable = true;
-			}else {
-				right_enable = false;
 			}
-		}else {
-			right_enable = false;
-		}
 
+			if (channels_value[ _right_down2up] <= (_channels_min + _error_value)
+			 && channels_value[ _right_down2up] >= (_channels_min - _error_value)){
+				if(channels_value[ _right_left2right] <= (_channels_min + _error_value)
+				&& channels_value[ _right_left2right] >= (_channels_min - _error_value)){
+				right_enable = true;
+				}else {
+				right_enable = false;
+				}
+			}else {
+			right_enable = false;
+			}
+		}else{
+			if (channels_value[ _left_down2up] = _channels_min ){
+				if(channels_value[ _left_left2right] = _channels_max){
+				left_enable = true;
+				}else {
+					left_enable = false;
+				}
+			} else {
+			left_enable = false;
+			}
+
+			if (channels_value[ _right_down2up] = _channels_min){
+				if(channels_value[ _right_left2right] = _channels_min){
+				right_enable = true;
+				}else {
+				right_enable = false;
+				}
+			}else {
+			right_enable = false;
+			}
+		}
+		
 
 		if (left_start){
 			if (left_enable){

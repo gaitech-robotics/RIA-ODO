@@ -23,6 +23,8 @@ namespace ria_teleop
 
 		private:
 			std::string _rc_topic,_cmd_vel_topic;
+			bool _add_error;
+			int _error_value;
 			double _linear_max,_angular_max;
 			int _channels_num,_channels_max,_channels_min,_channels_mid;
 			int _left_down2up,_left_left2right;

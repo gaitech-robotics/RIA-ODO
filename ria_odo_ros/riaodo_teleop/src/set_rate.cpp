@@ -34,21 +34,14 @@ namespace ria_teleop
 	}
 
     void setRate::callSetrateSrv(){
-	int set_rate_unsuccess = 1;
         stream_rate.request.stream_id = _stream_id;
         stream_rate.request.message_rate = _rate_value;
         stream_rate.request.on_off = true;
-	while (set_rate_unsuccess){
-            if (set_rate.call(stream_rate)){
-                ROS_INFO("Mavros set stream rate successfully!");
-	        set_rate_unsuccess = 0;
-		break;
-            }else {
-                ROS_WARN("Mavros set stream rate unsuccessfully! Call the service again after 1 sec!");
-	        set_rate_unsuccess = 1;
-		sleep(1000);
-            }
-	}
+        if (set_rate.call(stream_rate)){
+            ROS_INFO("Mavros set stream rate successfully!");
+        }else {
+            ROS_WARN("Mavros set stream rate unsuccessfully! Please call the service again!");
+        }
     }
     
 
