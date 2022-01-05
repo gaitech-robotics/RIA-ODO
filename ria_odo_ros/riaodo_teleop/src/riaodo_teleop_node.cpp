@@ -25,7 +25,7 @@ SOFTWARE.
 int main(int argc, char** argv)
 {
 
-    ros::init(argc, argv, "ria_teleop_node");
+    ros::init(argc, argv, "riaodo_teleop_node");
     ros::NodeHandle nh;
     ros::NodeHandle pnh("~");
 
