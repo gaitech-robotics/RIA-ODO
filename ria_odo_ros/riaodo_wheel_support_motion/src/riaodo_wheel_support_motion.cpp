@@ -91,7 +91,7 @@ void WheelSupMotion::ImuCallback(const sensor_msgs::Imu::ConstPtr& msg){
 }
 
 int main(int argc,char** argv){
-    ros::init(argc, argv, "r100_wheel_support_motion");
+    ros::init(argc, argv, "riaodo_wheel_support_motion");
     WheelSupMotion wheel_support_motion;
     ros::Rate r(50.0);
     while (ros::ok()){
