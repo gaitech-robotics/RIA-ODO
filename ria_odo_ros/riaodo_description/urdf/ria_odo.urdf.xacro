@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find riaodo_description)/urdf/materials.urdf.xacro"/>
   <xacro:include filename="$(find riaodo_description)/urdf/property.urdf.xacro"/>
-  <xacro:include filename="$(find riaodo_description)/urdf/wheel_supports.urdf.xacro"/>
+  <xacro:include filename="$(find riaodo_description)/urdf/wheel_supports_static.urdf.xacro"/>
   <xacro:include filename="$(find riaodo_description)/urdf/wheels.urdf.xacro"/>
  
   <link name="base_footprint">
