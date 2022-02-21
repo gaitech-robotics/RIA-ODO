@@ -11,7 +11,6 @@
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>riaodo_teleop</exec_depend>
   <exec_depend>riaodo_description</exec_depend>
-  <exec_depend>riaodo_wheel_support_motion</exec_depend>
 
   <export>
    <metapackage/>
