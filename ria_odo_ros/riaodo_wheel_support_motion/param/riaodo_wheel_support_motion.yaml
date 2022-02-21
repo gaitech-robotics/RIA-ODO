@@ -1,6 +1,0 @@
-imu_topic: /wit/imu_data
-parent_frame: r100_base_link
-child_frame_1: left_wheel_support_link
-child_frame_2: right_wheel_support_link
-imu_max_angle: 0.104719758
-wheel_support_max_angle: 0.2617993

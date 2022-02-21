@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-	<node pkg="riaodo_wheel_support_motion" type="riaodo_wheel_support_motion" name="riaodo_wheel_support_motion_node" output="screen" >
-      		<rosparam command="load" file="$(find riaodo_wheel_support_motion)/param/riaodo_wheel_support_motion.yaml" />
-	</node>	
-	
-</launch>
