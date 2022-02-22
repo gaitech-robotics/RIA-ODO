@@ -61,7 +61,7 @@ namespace ria_teleop
 
 		k_l = (2 * _linear_max)/(_channels_max - _channels_min);
 		b_l = _linear_max - (k_l * _channels_max);
-		k_a = (2 * _angular_max)/(_channels_max - _channels_min);
+		k_a = -(2 * _angular_max)/(_channels_max - _channels_min);
 		b_a = _angular_max - (k_a * _channels_max);
 
 
