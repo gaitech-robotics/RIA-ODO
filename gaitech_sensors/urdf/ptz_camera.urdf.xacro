@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ptz_camera">
+
+  <xacro:macro name="ptz_camera" params="prefix parent *origin">
+    <joint name="${prefix}_joint" type="fixed">
+      <axis xyz="0 1 0"/>
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}_base_link"/>
+    </joint>
+    <link name="${prefix}_base_link">
+    <inertial>
+      <origin
+        xyz="0.065 3.46944695195361E-18 3.46944695195361E-18"
+        rpy="0 0 0" />
+      <mass
+        value="3.45675722859792" />
+      <inertia
+        ixx="0.0146289965914264"
+        ixy="0"
+        ixz="-9.4039548065783E-35"
+        iyy="0.0121827647259886"
+        iyz="-3.70383590671999E-35"
+        izz="0.0121827647259886" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_base_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_pan_link">
+    <inertial>
+      <origin
+        xyz="0.0256949129588264 -6.93889390390723E-18 -6.93889390390723E-18"
+        rpy="0 0 0" />
+      <mass
+        value="0.484563326483739" />
+      <inertia
+        ixx="0.00140741823967617"
+        ixy="-3.25272272271992E-20"
+        ixz="1.65982565722214E-20"
+        iyy="0.00100927694411161"
+        iyz="-1.19814768299652E-09"
+        izz="0.000673426017721099" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_pan_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_pan_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_tilt_link">
+    <inertial>
+      <origin
+        xyz="-6.79865621092124E-09 -2.90295939734536E-08 0.000335720944354689"
+        rpy="0 0 0" />
+      <mass
+        value="0.01" />
+      <inertia
+        ixx="0.000616018404785973"
+        ixy="1.58102633998769E-11"
+        ixz="-1.9447509040127E-10"
+        iyy="0.00100715377679749"
+        iyz="-7.54136319906493E-10"
+        izz="0.000626538247055341" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_tilt_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gaitech_sensors/meshes/ptz_camera_tilt_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_zoom_link">
+      <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.00001" />
+      <inertia
+        ixx="1.0"
+        ixy="0"
+        ixz="0"
+        iyy="1.0"
+        iyz="0"
+        izz="1.0" />
+    </inertial>
+  </link>
+
+
+  <!-- pan joint moves from 0 to 350 degrees -->
+  <joint name="${prefix}_pan_joint" type="revolute">
+    <origin xyz="0.13 0 0" rpy="0 0 0" />
+    <parent link="${prefix}_base_link" />
+    <child link="${prefix}_pan_link" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="6.10865238198015" effort="0.5" velocity="1.5707" />
+  </joint>
+
+  <!-- tilt joint moves from 0 to 90 degrees -->
+  <joint name="${prefix}_tilt_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="${prefix}_pan_link" />
+    <child link="${prefix}_tilt_link" />
+    <axis  xyz="0 0 1" />
+    <limit lower="0" upper="1.57079632679" effort="0.5" velocity="1.5707" />
+  </joint>
+
+  <!-- 
+    Note:
+    There is no way to quantify (in meters or radians) 
+    the amount of Zoom if the focal length and other 
+    camera parameters are unknown. Additionally, it is 
+    out of scope of this package. That is why I have used 
+    0 - 1 angle range for the camera_zoom_joint to update 
+    the tf tree. 
+   -->
+  <joint name="${prefix}_zoom_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="${prefix}_tilt_link" />
+    <child link="${prefix}_zoom_link" />
+    <axis  xyz="0 0 1" />
+    <limit lower="0" upper="1" effort="1" velocity="1" /> 
+  </joint>
+
+  <transmission name="${prefix}_pan_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_pan_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_pan_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}_tilt_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_tilt_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_tilt_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}_zoom_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_zoom_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_zoom_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace></robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo> 
+  </xacro:macro>
+
+<!--
+  <xacro:macro name="sensor_ptz_camera_gazebo">
+    <gazebo reference="${prefix}_frame_link">
+      <sensor type="camera" name="${prefix}_sensor">
+        <update_rate>30.0</update_rate>
+        <camera>
+          <horizontal_fov>${60.0*M_PI/180.0}</horizontal_fov>
+          <image>
+            <format>R8G8B8</format>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>${near}</near>
+            <far>${far}</far>
+          </clip>
+        </camera>
+        <plugin name="${prefix}_controller" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>${prefix}</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>/${prefix}_optical_frame_link</frameName>
+          <hackBaseline>0.0</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+-->
+
+</robot>

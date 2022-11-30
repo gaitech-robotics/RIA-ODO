@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- RIA ODO Description file-->
+  <param name="robot_description" command="$(find xacro)xacro '$(find riaodo_description)/urdf/ria_odo.urdf.xacro'"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="-0.3945 0 0.149 0 0 0 riaodo_base_link imu_link 100" />
+ 
+
+
+</launch>

@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-	<node pkg="riaodo_teleop" type="riaodo_teleop_node" name="riaodo_teleop_node" output="screen" >
-      <rosparam command="load" file="$(find riaodo_teleop)/config/fs_i6s.yaml" />
-	</node>	
-	
-</launch>
