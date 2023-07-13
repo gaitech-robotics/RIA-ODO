@@ -1,2 +1,2 @@
 # RIA-ODO
-RIA-ODO packages
+RIA-ODO packages include ptz camera
